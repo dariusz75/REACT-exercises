@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Thumbnail</title>
+	<script src="https://fb.me/react-0.14.3.js"></script>
+	<script src="https://fb.me/react-dom-0.14.3.js"></script>
+	<script src="https://fb.me/JSXTransformer-0.12.2.js"></script>
+	<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-4 target"></div>
+		</div>
+	</div>
+</body>
+<!--
+Obiekt options przechowuje wszystkie wlasciwosci wykorzystane w naszej kolekcji zbudowanej z komponentow Thumbnail i Badge.
+-->
+</html>
+
+<script type="text/jsx">
+
+var options = {
+	title: 'See tutorials ',
+	number: 32,
+	header: 'Learn React',
+	descritption: 'React is a new fantastic framework for building fast, dynamic pages React is a new fantastic framework for building fast, dynamic pages',
+	imageUrl: 'https://tleunen.github.io/react-mdl/react.svg'
+};
+
+	var Badge = React.createClass({
+		render: function() {
+			return 	<button className="btn btn-primary" type="button">
+  						{this.props.title}<span className="badge">{this.props.number}</span>
+							</button>
+		}
+	});
+
+	var Thumbnail = React.createClass({
+		render: function() {
+			return 	<div className="thumbnail">
+      					<img src={this.props.imageUrl} />
+      						<div className="caption">
+		      					<h3>{this.props.header}</h3>
+		      					<p>{this.props.descritption}</p>
+		      					<p>
+		      						<Badge title={this.props.title} number={this.props.number} />
+		      					</p>
+      						</div>
+    					</div>
+		}
+	});
+
+	var finalElement = React.createElement(Thumbnail, options);
+
+	ReactDOM.render(finalElement, document.querySelector('.target'));
+</script>

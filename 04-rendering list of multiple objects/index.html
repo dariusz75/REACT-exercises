@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Thumbnail List</title>
+	<script src="https://fb.me/react-0.14.3.js"></script>
+	<script src="https://fb.me/react-dom-0.14.3.js"></script>
+	<script src="https://fb.me/JSXTransformer-0.12.2.js"></script>
+	<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class=" target"></div>
+		</div>
+	</div>
+</body>
+	
+	<!-- 
+	var options jest po prostu obiektem posiadajacym nastepny obiekt ktory posiada tablice obiektow - array. 
+	W skrocie options = {
+											thumbnailData:[{}, {}]
+											}  
+	-->
+
+	<!-- 
+	Ponizej w var list zostala uzyta funkcja map().
+	Funkcja ta sluzy do mapowania tablicy i posiada ona 2 parametry.
+	Argumentem pierwszego parametru jest nazwa tablicy ktora chcemy zmapowac.
+	Argumentem drugiego parametru jest funkcja call back ktora chcemy zastosowac na kazdym elemencie mapowanej tablicy. 
+	Funkcja map() zwraca wynik przeprowadzonej operacji w nowo utworzonej tablicy.
+
+	this.props.thumbnailData.map() mapuje tablice thumbnailData znajdujaca sie w obiekcie var options.
+	Funkcja map() musi miec podany argument, ktory musi byc callbackiem, czyli nastepna funkcja nazwana przez nas, w tym przypadku jest to thumbnailProps.
+	Funkcja thumbnailProps wezwana zostanie na kazdym obiekcie w tabeli thumbnailData czyli wyobrazajac sobie przebieg tej funkcji w czasie za pierwszym razem thumbnailProps bedzie
+	pierwszym obiektem z tablicy czyli 
+		{
+		title: 'See tutorials ',
+		number: 32,
+		header: 'Learn React',
+		descritption: 'React is a new fantastic framework for building fast, dynamic pages React is a new fantastic framework for building fast, dynamic pages',
+		imageUrl: 'https://tleunen.github.io/react-mdl/react.svg'
+		}
+	a nastepnie, po dokonaniu kolejnego calla
+	{
+		title: 'See tutorials ',
+		number: 25,
+		header: 'Learn Gulp',
+		descritption: 'Gulp will speed up your developmant process. Gulp will speed up your developmant process.',
+		imageUrl: 'https://avatars0.githubusercontent.com/u/6200624?v=3&s=400'
+		}
+
+		Aby wykorzystac properties z nowych obiektow musimy je przypisac do zwracanego elementu.
+		Aby uniknac powtarzania wypisywania thumbnailProps.title, thumbnailProps.number, etc React posiada skrot ktory umozliwia nam przypisanie wszystkich properties z danego obiektu nowemu, zwracanemu elementowi. 
+		Jest nim {...nazwaFunkcji} czyli {...thumbnailProps}.
+
+		Czyli teraz var list = this.props.thumbnailData.map(function(thumbnailProps){
+										return <Thumbnail {...thumbnailProps}/>
+										});
+		Nasza zmienna list to nic innego jak, lista instantow Thumbnails z 
+		zawartoscia z obiektow wyprowadzonych z tablicy. 
+		W naszym przypadku lista sklada sie z dwoch elemantow Thumbnails.
+
+		Teraz musimy wyrenderowac to na strone, czyli zwrocic ja otoczona divem.
+		return 	<div>{list}</div>;
+	-->
+</html>
+
+<script type="text/jsx">
+
+
+	var Badge = React.createClass({
+		render: function() {
+			return 	<button className="btn btn-primary" type="button">
+  						{this.props.title}<span className="badge">{this.props.number}</span>
+							</button>
+		}
+	});
+
+
+	var Thumbnail = React.createClass({
+		render: function() {
+			return 	<div className="col-sm-6 col-md-4">
+								<div className="thumbnail">
+		    					<img src={this.props.imageUrl} />
+		    						<div className="caption">
+			      					<h3>{this.props.header}</h3>
+			      					<p>{this.props.descritption}</p>
+			      					<p>
+			      						<Badge title={this.props.title} number={this.props.number} />
+			      					</p>
+		    						</div>
+		  					</div>
+		  				</div>
+		}
+	});
+
+
+	var ThumbnailList = React.createClass({
+		render: function() {
+			var list = this.props.thumbnailData.map(function(thumbnailProps){
+				return <Thumbnail {...thumbnailProps} />
+			});
+			return 	<div>
+							{list}
+							</div>;
+		}
+	});
+
+	var options = {
+	thumbnailData: [{
+		title: 'See tutorials ',
+		number: 32,
+		header: 'Learn React',
+		descritption: 'React is a new fantastic framework for building fast, dynamic pages React is a new fantastic framework for building fast, dynamic pages',
+		imageUrl: 'https://tleunen.github.io/react-mdl/react.svg'
+		},
+		{
+		title: 'See tutorials ',
+		number: 25,
+		header: 'Learn Gulp',
+		descritption: 'Gulp will speed up your developmant process. Gulp will speed up your developmant process.',
+		imageUrl: 'https://avatars0.githubusercontent.com/u/6200624?v=3&s=400'
+		}]
+};
+
+
+	var element = React.createElement(ThumbnailList, options);
+
+	ReactDOM.render(element, document.querySelector('.target'));
+
+</script>
