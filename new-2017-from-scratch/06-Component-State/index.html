@@ -1,0 +1,150 @@
+<html>
+<head>
+	<title>06-Component State</title>
+	<script src="js/react.js"></script>
+	<script src="js/react-dom.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.js"></script>
+
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+	<div id="app"> 
+  </div>
+
+
+<script type="text/babel" >
+
+    var Navbar = React.createClass({
+
+      getDefaultProps: function() {
+        return {
+          brand: 'Sample Website',
+          color: 'light'
+        };
+      },
+
+      render: function() {
+
+        if(this.props.color == 'dark') {
+          var navClass = 'navbar navbar-inverse';
+        } else {
+          var navClass = 'navbar navbar-default';
+        }
+
+        return(
+              <nav className={navClass}>
+                <div className="container-fluid">
+                  <div className="navbar-header">
+                    <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                      <span className="sr-only">Toggle navigation</span>
+                      <span className="icon-bar"></span>
+                      <span className="icon-bar"></span>
+                      <span className="icon-bar"></span>
+                    </button>
+                    <a className="navbar-brand" href="#">{this.props.brand}</a>
+                  </div>
+                  <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul className="nav navbar-nav">
+                      <li className="active"><a href="#">Home <span className="sr-only">(current)</span></a></li>
+                      <li><a href="#">About</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </nav>
+
+        );
+      }
+    });
+
+    var Jumbotron = React.createClass({
+
+      getDefaultProps: function() {
+          return {
+            heading: 'Welcome!!!',
+            text: 'Welcome to our new website built in ReactJS.',
+            link: 'https://www.google.co.uk/'
+          };
+        },
+
+      render: function() {
+        return(
+          <div className="jumbotron">
+            <div className="container">
+              <h1>{this.props.heading}</h1>
+              <p>{this.props.text}</p>
+              <p><a className="btn btn-primary btn-lg" href={this.props.link} target="_blank" role="button">Learn more &raquo;</a></p>
+            </div>
+          </div>
+        );
+      }
+    });
+
+    var HomePage = React.createClass({
+      render: function() {
+        return(
+        <div className="container">
+          <div className="row">
+            Main Content
+          </div>
+          <hr />
+        </div>
+        );
+      }
+    });
+
+    var Footer = React.createClass({
+
+      getDefaultProps: function() {
+          return {
+            website: 'My Website',
+            year: 2017
+          };
+        },
+
+      render: function() {
+        return(
+          <div className="container">
+            <footer>
+              <p>&copy; {this.props.year} {this.props.website}, Inc.</p>
+            </footer>
+          </div>
+        );
+      }
+    });
+
+    var App = React.createClass({
+      render: function() {
+        return(
+          <div>
+            <Navbar color="dark"/>
+            <Jumbotron />
+            <HomePage />
+            <Footer />
+          </div>
+        );
+      }
+    });
+
+    ReactDOM.render(
+      <App />, document.getElementById('app')
+    );
+</script>
+</body>
+</html>
+
+<!--
+Powyzszy przyklad pokazuje sposob na okreslenie klacy za pomoca wlasciwosci komponentu.
+W linii 23 wlasciwosc color zostala okreslona jako 'light'.
+W lini 29 napisalismy if statement mowiacy ze:
+- jezeli wartosc wlasciwosci color to dark, wtedy zmienna o nazwie navClass = 'navbar navbar-inverse'
+- w przypadku gdy wartosc wlasciwosci color jest inna niz dark, wtedy zmienna o nazwie navClass = 'navbar navbar-default'
+Klasa navbar-inverse to bootstrapowa klasa nadajaca paskowi nawigacji ciemny kolor, klasa navbar-default nadaje kolor jasny.
+
+Nastepnie w atrybucie klasy w linii 36 jako wartosc podajemy {navClass}, czyli odwolujemy sie do wczesniej utworzonej zmiennej.
+
+Na koniec, w linii 120 definiujemy wartosc wlasciwosci color na dark - color="dark".
+Wynikiem koncowym jest nawigacja w kolorze ciemnym.
+Po zmianie wartosci wlasciwosci powracamy do klasy navbar navbar-default czego efektem jest nawigacja w kolorze jasnym.
+
+-->
